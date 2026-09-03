@@ -1,0 +1,1 @@
+export { GuonopediaLanding } from "./GuonopediaLanding";

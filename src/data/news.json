@@ -1,0 +1,47 @@
+[
+    {
+      "id": 1,
+      "title": "Scholarship to Study Urhobo Language – Apply Now",
+      "excerpt": "The Urhobo Progress Union America announces a groundbreaking scholarship program to Revive and promote the Urhobo language and culture.",
+      "content": "The Urhobo Progress Union America is proud to announce a comprehensive scholarship program designed to Revive and promote the rich heritage of the Urhobo language. This initiative represents a significant investment in cultural preservation and educational advancement.",
+      "category": "Scholarship",
+      "date": "2024-01-15",
+      "image": "https://nairametrics.com/wp-content/uploads/2023/03/DAAD-Scholarships.webp",
+      "featured": true,
+      "author": "Urhobo Progress Union America"
+    },
+    {
+      "id": 2,
+      "title": "Partnership with Delta State University Strengthens Program",
+      "excerpt": "DELSU collaboration ensures seamless continuation of studies for scholarship recipients.",
+      "content": "Our partnership with Delta State University (DELSU) provides scholarship recipients with unprecedented opportunities for advanced study and research in Urhobo language and culture.",
+      "category": "Education",
+      "date": "2024-01-10",
+      "image": "https://nairametrics.com/wp-content/uploads/2023/03/DAAD-Scholarships.webp",
+      "featured": false,
+      "author": "Dr. Victor Omoghene"
+    },
+    {
+      "id": 3,
+      "title": "Reviving Urhobo Heritage Through Education",
+      "excerpt": "How language education serves as a bridge between generations and cultures.",
+      "content": "The Urhobo language carries within it centuries of wisdom, tradition, and cultural identity. Through structured education programs, we ensure this heritage continues to thrive.",
+      "category": "Culture",
+      "date": "2024-01-05",
+      "image": "https://nairametrics.com/wp-content/uploads/2023/03/DAAD-Scholarships.webp",
+      "featured": false,
+      "author": "Cultural Heritage Committee"
+    },
+    {
+      "id": 4,
+      "title": "Application Deadline Extended to March 2024",
+      "excerpt": "More time for prospective students to prepare their scholarship applications.",
+      "content": "Due to overwhelming interest, we have extended the application deadline to give more qualified candidates the opportunity to apply for this transformative program.",
+      "category": "Events",
+      "date": "2024-01-20",
+      "image": "https://nairametrics.com/wp-content/uploads/2023/03/DAAD-Scholarships.webp",
+      "featured": false,
+      "author": "Admissions Committee"
+    }
+  ]
+  

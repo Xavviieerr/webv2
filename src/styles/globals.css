@@ -1,0 +1,104 @@
+
+@import "tailwindcss";
+
+:root {
+  /* colors */
+  --primary-clr: #05353a;
+  --secondary-clr: #2c5282;
+
+  /* background color */
+  --background-clr: #f2feff;
+
+  /* font weight */
+  --font-sm: 400;
+  --font-md: 600;
+
+  /* font sizes */
+  --textsm: 1rem; /* 16px*/
+  --textmd: 1.125rem; /* 18px*/
+  --textxl: 1.25rem; /*20px;*/
+  --text-lg: 3.375rem; /*54px*/
+
+  --xs: 1rem;
+  --ms: 1.25rem;
+  --ls: 1.5rem;
+}
+
+* {
+  :before,
+  :after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+}
+
+
+a:hover,
+a:focus {
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+.text-primary {
+  color: var(--primary-clr);
+}
+
+.text-secondary {
+  color: var(--secondary-clr);
+}
+
+.bg-background {
+  background-color: var(--background-clr);
+}
+
+
+.text-sm {
+  font-size: var(--font-sm);
+}
+
+.text-md {
+  font-size: var(--font-md);
+}
+
+.text-xl {
+  font-size: var(--font-xl);
+}
+
+.text-lg {
+  font-size: var(--font-lg);
+}
+
+/* Works in Chrome, Edge, Safari (WebKit-based) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #07363a !important;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #052a2d !important;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #07363a #f2feff !important; /* thumb color track color */
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}

@@ -1,0 +1,12 @@
+Dockerfile
+.dockerignore
+.git
+.gitignore
+.env*.local
+node_modules
+.next
+README*
+*.md
+.cursor
+.idea
+.vscode

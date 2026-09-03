@@ -1,0 +1,457 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* DM Sans is loaded via next/font in layout.tsx */
+
+:root {
+	/* Brand colors */
+	--primary: oklch(0.205 0 0);
+	--primary-2: #41a3ad;
+	--secondary: oklch(0.97 0 0);
+	--secondary-2: #fbedca;
+	--primary-foreground: oklch(0.985 0 0);
+	--secondary-foreground: oklch(0.205 0 0);
+	--radius: 0.625rem;
+	--background: oklch(1 0 0);
+	--foreground: oklch(0.145 0 0);
+	--card: oklch(1 0 0);
+	--card-foreground: oklch(0.145 0 0);
+	--popover: oklch(1 0 0);
+	--popover-foreground: oklch(0.145 0 0);
+	--muted: oklch(0.97 0 0);
+	--muted-foreground: oklch(0.556 0 0);
+	--accent: oklch(0.97 0 0);
+	--accent-foreground: oklch(0.205 0 0);
+	--destructive: oklch(0.577 0.245 27.325);
+	--border: oklch(0.922 0 0);
+	--input: oklch(0.922 0 0);
+	--ring: oklch(0.708 0 0);
+	--chart-1: oklch(0.646 0.222 41.116);
+	--chart-2: oklch(0.6 0.118 184.704);
+	--chart-3: oklch(0.398 0.07 227.392);
+	--chart-4: oklch(0.828 0.189 84.429);
+	--chart-5: oklch(0.769 0.188 70.08);
+	--sidebar: oklch(1 0 0);
+	--sidebar-foreground: oklch(0.145 0 0);
+	--sidebar-primary: oklch(0.205 0 0);
+	--sidebar-primary-foreground: oklch(0.985 0 0);
+	--sidebar-accent: oklch(0.97 0 0);
+	--sidebar-accent-foreground: oklch(0.205 0 0);
+	--sidebar-border: oklch(0.922 0 0);
+	--sidebar-ring: oklch(0.708 0 0);
+}
+
+@theme inline {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-primary: #02474f;
+	--color-primary-2: #41a3ad;
+	--color-primary-foreground: #ffffff;
+	--color-secondary: #fbf5ea;
+	--color-secondary-2: #fbedca;
+	--color-secondary-foreground: #02474f;
+	--color-secondary-foreground-50: #d4e8ea;
+	--color-muted-text: #05353a80;
+	/* Account / profile palette */
+	--color-ink: #0d4d4d;
+	--color-ink-muted: #6a6a6a;
+	--color-surface: #f2feff;
+	--color-surface-raised: #d4e8ea;
+	--color-brand: #0e808d;
+	--color-danger: #c14a4a;
+	/* Legacy aliases */
+	--color-base-green: #02474f;
+	--color-base-yellow: #fbedca;
+	--color-grayscale: #f9f9f9;
+	--color-light-gray: #f6f6f6;
+	--color-backg: #f2feff;
+	--color-sidebar-active: #0e808d;
+	--color-sidebar-active-text: #ffffff;
+	--color-sidebar-text: #1a4349;
+	--color-sidebar-ring: var(--sidebar-ring);
+	--color-sidebar-border: var(--sidebar-border);
+	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+	--color-sidebar-accent: var(--sidebar-accent);
+	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+	--color-sidebar-primary: var(--sidebar-primary);
+	--color-sidebar-foreground: var(--sidebar-foreground);
+	--color-sidebar: var(--sidebar);
+	--color-chart-5: var(--chart-5);
+	--color-chart-4: var(--chart-4);
+	--color-chart-3: var(--chart-3);
+	--color-chart-2: var(--chart-2);
+	--color-chart-1: var(--chart-1);
+	--color-ring: var(--ring);
+	--color-input: var(--input);
+	--color-border: var(--border);
+	--color-destructive: var(--destructive);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-accent: var(--accent);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-muted: var(--muted);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-popover: var(--popover);
+	--color-card-foreground: var(--card-foreground);
+	--color-card: var(--card);
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+	--radius-2xl: calc(var(--radius) + 8px);
+	--radius-3xl: calc(var(--radius) + 12px);
+	--radius-4xl: calc(var(--radius) + 16px);
+
+	--font-plus-sans: "Plus Jakarta Sans", sans-serif;
+}
+
+@layer components {
+	.link {
+		@apply text-primary hover:underline;
+	}
+
+	.input {
+		@apply w-full py-3 px-5 text-base placeholder:text-gray-500 border outline-none border-gray-400 focus:border-primary;
+	}
+
+	.primary-btn {
+		@apply px-5 py-2 rounded-lg bg-primary text-white w-fit;
+	}
+	/* Primary button - dark teal background, white text */
+	.btn-primary {
+		@apply inline-flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium text-white transition-colors;
+		background-color: var(--primary);
+	}
+	.btn-primary:hover {
+		filter: brightness(0.95);
+	}
+	/* Secondary button - white background, primary-2 border, dark text */
+	.btn-secondary {
+		@apply inline-flex items-center justify-center rounded-lg border-2 bg-white px-5 py-2.5 text-sm font-medium transition-colors;
+		border-color: var(--primary-2);
+		color: var(--secondary-foreground);
+	}
+	.btn-secondary:hover {
+		background-color: var(--secondary);
+	}
+}
+
+@layer utilities {
+	.font-sf {
+		font-family:
+			"SF Pro Rounded",
+			system-ui,
+			-apple-system,
+			BlinkMacSystemFont,
+			"Segoe UI",
+			sans-serif;
+	}
+
+	/* Hide scrollbar for Chrome, Safari and Opera */
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+	/* Hide scrollbar for IE, Edge and Firefox */
+	.no-scrollbar {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+	}
+
+	.custom-scrollbar {
+		scrollbar-width: thin;
+		scrollbar-color: #d4e8ea transparent;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar {
+		width: 6px;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar:horizontal {
+		height: 6px;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar-thumb {
+		background-color: #d4e8ea;
+		border-radius: 9999px;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+		background-color: #c0dadd;
+	}
+}
+
+/* Sidebar collapsible group expand/collapse animations */
+.animate-collapsible-down {
+	animation: collapsible-down 0.2s ease-out;
+}
+
+.animate-collapsible-up {
+	animation: collapsible-up 0.2s ease-out;
+}
+
+@keyframes collapsible-down {
+	from {
+		height: 0;
+		opacity: 0;
+	}
+	to {
+		height: var(--radix-collapsible-content-height);
+		opacity: 1;
+	}
+}
+
+@keyframes collapsible-up {
+	from {
+		height: var(--radix-collapsible-content-height);
+		opacity: 1;
+	}
+	to {
+		height: 0;
+		opacity: 0;
+	}
+}
+
+/* Toast Animations */
+@keyframes slideInRight {
+	from {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOut {
+	from {
+		opacity: 1;
+		transform: translateX(0) scale(1);
+	}
+
+	to {
+		opacity: 0;
+		transform: translateX(20px) scale(0.95);
+	}
+}
+
+@keyframes slideInUp {
+	from {
+		transform: translateY(20px);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes bounce {
+	0%,
+	20%,
+	53%,
+	80%,
+	100% {
+		transform: translate3d(0, 0, 0);
+	}
+
+	40%,
+	43% {
+		transform: translate3d(0, -8px, 0);
+	}
+
+	70% {
+		transform: translate3d(0, -4px, 0);
+	}
+
+	90% {
+		transform: translate3d(0, -2px, 0);
+	}
+}
+
+/* Custom Toast Styles */
+.toast-container {
+	z-index: 9999;
+}
+
+/* Base toast styling */
+.custom-toast {
+	font-family: var(--font-generalSans, Arial, Helvetica, sans-serif) !important;
+	backdrop-filter: blur(10px);
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	position: relative;
+	overflow: hidden;
+}
+
+/* Toast hover effect */
+.custom-toast:hover {
+	transform: translateY(-2px) scale(1.01);
+	box-shadow: 0 15px 35px rgba(5, 53, 58, 0.25) !important;
+}
+
+/* Success toast specific styles */
+.custom-toast-success {
+	position: relative;
+}
+
+.custom-toast-success::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 4px;
+	background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+	border-radius: 12px 0 0 12px;
+	z-index: 1;
+}
+
+.custom-toast-success svg {
+	animation: bounce 0.6s ease-in-out;
+	filter: drop-shadow(0 2px 4px rgba(16, 185, 129, 0.3));
+}
+
+/* Error toast specific styles */
+.custom-toast-error {
+	position: relative;
+}
+
+.custom-toast-error::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 4px;
+	background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+	border-radius: 12px 0 0 12px;
+	z-index: 1;
+}
+
+.custom-toast-error svg {
+	animation: slideInUp 0.4s ease-out;
+	filter: drop-shadow(0 2px 4px rgba(239, 68, 68, 0.3));
+}
+
+/* Toast content wrapper */
+.custom-toast > div {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	position: relative;
+	z-index: 2;
+}
+
+/* Toast message text */
+.custom-toast span {
+	flex: 1;
+	word-wrap: break-word;
+	line-height: 1.5;
+}
+
+/* Enhanced shadow on focus */
+.custom-toast:focus-within {
+	box-shadow: 0 15px 35px rgba(5, 53, 58, 0.3) !important;
+	outline: 2px solid rgba(5, 53, 58, 0.2);
+	outline-offset: 2px;
+}
+
+/* Toast progress bar at bottom */
+.custom-toast::after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 3px;
+	background: linear-gradient(
+		90deg,
+		rgba(5, 53, 58, 0.15),
+		rgba(5, 53, 58, 0.05)
+	);
+	border-radius: 0 0 12px 12px;
+	animation: progressBar 4s linear forwards;
+	z-index: 0;
+}
+
+.custom-toast-error::after {
+	animation: progressBar 5s linear forwards;
+	background: linear-gradient(
+		90deg,
+		rgba(239, 68, 68, 0.25),
+		rgba(239, 68, 68, 0.1)
+	);
+}
+
+.custom-toast-success::after {
+	background: linear-gradient(
+		90deg,
+		rgba(16, 185, 129, 0.25),
+		rgba(16, 185, 129, 0.1)
+	);
+}
+
+@keyframes progressBar {
+	from {
+		width: 100%;
+		opacity: 1;
+	}
+
+	to {
+		width: 0%;
+		opacity: 0.8;
+	}
+}
+
+.dark {
+	--background: oklch(0.145 0 0);
+	--foreground: oklch(0.985 0 0);
+	--card: oklch(0.205 0 0);
+	--card-foreground: oklch(0.985 0 0);
+	--popover: oklch(0.205 0 0);
+	--popover-foreground: oklch(0.985 0 0);
+	--primary: oklch(0.922 0 0);
+	--primary-foreground: oklch(0.205 0 0);
+	--secondary: oklch(0.269 0 0);
+	--secondary-foreground: oklch(0.985 0 0);
+	--muted: oklch(0.269 0 0);
+	--muted-foreground: oklch(0.708 0 0);
+	--accent: oklch(0.269 0 0);
+	--accent-foreground: oklch(0.985 0 0);
+	--destructive: oklch(0.704 0.191 22.216);
+	--border: oklch(1 0 0 / 10%);
+	--input: oklch(1 0 0 / 15%);
+	--ring: oklch(0.556 0 0);
+	--chart-1: oklch(0.488 0.243 264.376);
+	--chart-2: oklch(0.696 0.17 162.48);
+	--chart-3: oklch(0.769 0.188 70.08);
+	--chart-4: oklch(0.627 0.265 303.9);
+	--chart-5: oklch(0.645 0.246 16.439);
+	--sidebar: oklch(0.205 0 0);
+	--sidebar-foreground: oklch(0.985 0 0);
+	--sidebar-primary: oklch(0.488 0.243 264.376);
+	--sidebar-primary-foreground: oklch(0.985 0 0);
+	--sidebar-accent: oklch(0.269 0 0);
+	--sidebar-accent-foreground: oklch(0.985 0 0);
+	--sidebar-border: oklch(1 0 0 / 10%);
+	--sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+	* {
+		@apply border-border outline-ring/50;
+	}
+	body {
+		@apply bg-background text-foreground m-0 p-0;
+	}
+	html {
+		@apply m-0 p-0;
+	}
+}
