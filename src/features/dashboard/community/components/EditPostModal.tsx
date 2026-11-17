@@ -56,8 +56,6 @@ export function EditPostModal({ isOpen, onClose, post }: EditPostModalProps) {
             content: content.trim(),
             seoTitle,
             seoDescription,
-            categoryId,
-            tagIds,
           },
         }).unwrap();
         toast.success(t("postUpdated", "Post updated"));

@@ -56,11 +56,11 @@ export function AdminClaimList() {
 							<tr key={claim.id} className="border-b border-gray-100 hover:bg-gray-50">
 								<td className="py-3 px-4">
 									<span className="font-medium text-[#0D4D4D]">
-										{claim.place?.name ?? "Unknown"}
+										{claim.user.username ?? "Unknown"}
 									</span>
 								</td>
 								<td className="py-3 px-4 text-gray-700">
-									{claim.user.firstName} {claim.user.lastName}
+									{claim.user.email}
 								</td>
 								<td className="py-3 px-4 text-gray-500">
 									{new Date(claim.createdAt).toLocaleDateString()}

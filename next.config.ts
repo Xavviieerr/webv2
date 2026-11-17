@@ -11,9 +11,9 @@ const nextConfig = {
       "nigeriannewsdirect.com",
     ],
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  // eslint: {
+  //   ignoreDuringBuilds: true,
+  // },
   // Note: HMR ping errors are a known issue with Next.js 15 + Turbopack
   // These are harmless warnings and don't affect functionality
   // They can be safely ignored or will be fixed in future Next.js updates

@@ -1,6 +1,7 @@
 "use client";
 
 import i18n from "@/lib/i18n";
+import { cn } from "@/lib/utils";
 import { setLanguage } from "@/slice/changeLangSlice";
 import { RootState } from "@/store/store";
 import { useAppDispatch, useAppSelector } from "@/types/hooks";
@@ -9,7 +10,13 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 
-const LanguageSwitcher = () => {
+interface LanguageSwitcherProps {
+  /** Compact variant for headers: no outer padding and a tighter control. */
+  compact?: boolean;
+  className?: string;
+}
+
+const LanguageSwitcher = ({ compact = false, className }: LanguageSwitcherProps) => {
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   //   const [isMobileLanguageDropdownOpen, setIsMobileLanguageDropdownOpen] =
   //     useState(false);
@@ -90,7 +97,7 @@ const LanguageSwitcher = () => {
   return (
     <div
       ref={switcherRef}
-      className="px-4 py-2"
+      className={cn(!compact && "px-4 py-2", className)}
       onClick={(e) => e.stopPropagation()}
     >
       <div className="relative group cursor-pointer" ref={languageDropdownRef}>
@@ -99,7 +106,10 @@ const LanguageSwitcher = () => {
             e.stopPropagation();
             setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
           }}
-          className="w-full flex gap-2 items-center justify-between px-3 py-1.5 bg-secondary-foreground/10 border border-green-700/30 group-hover:border-green-700 rounded-full text-xs font-medium text-gray-700 transition-all focus:outline-none"
+          className={cn(
+            "w-full flex gap-2 items-center justify-between bg-secondary-foreground/10 border border-green-700/30 group-hover:border-green-700 rounded-full font-medium text-gray-700 transition-all focus:outline-none",
+            compact ? "px-2.5 py-1.5 text-[11px]" : "px-3 py-1.5 text-xs",
+          )}
         >
           <span>{language === "en" ? "ENG" : "URH"}</span>
           <ChevronDown
@@ -109,7 +119,7 @@ const LanguageSwitcher = () => {
 
         {isLanguageDropdownOpen && (
           <div
-            className="absolute top-full w-fit left-0 right-0 mt-1 bg-secondary-foreground-50/30 border border-green-700/30 rounded-lg shadow-lg overflow-hidden z-60"
+            className="absolute top-full right-0 mt-1 w-max min-w-full bg-secondary-foreground-50/30 border border-green-700/30 rounded-lg shadow-lg overflow-hidden z-60"
             onClick={(e) => e.stopPropagation()}
           >
             <button

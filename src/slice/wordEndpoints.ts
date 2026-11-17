@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { toast } from "react-hot-toast";
 import { apiSlice } from "./requestSlice";
 import {

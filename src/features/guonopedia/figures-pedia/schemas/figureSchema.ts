@@ -22,8 +22,7 @@ export const suggestFigureSchema = z.object({
     .min(2, "Full name must be at least 2 characters")
     .max(200, "Full name must be at most 200 characters"),
   occupation: z.enum(OCCUPATION_VALUES, {
-    required_error: "Occupation is required",
-    invalid_type_error: "Please select a valid occupation",
+    message: "Occupation is required",
   }),
   shortBio: z
     .string()

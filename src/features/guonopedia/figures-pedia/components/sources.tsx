@@ -42,7 +42,7 @@ const ExternalLinks = ({
               <p className="flex items-start  gap-3 text-gray-txt-500">
                 <span className="font-medium text-base">{idx + 1}.</span>
                 <span className="">
-                  "{source.name}".{" website, "}
+                  &quot;{source.name}&quot;.{" website, "}
                   <a
                     href={source.url}
                     target="_blank"

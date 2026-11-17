@@ -1,3 +1,5 @@
+import type { NameItem } from "../../types";
+
 export const fetchNames = async ({
   token,
   page = "1",
@@ -16,7 +18,7 @@ export const fetchNames = async ({
   gender?: "neutral" | "male" | "female";
   status?: string;
   signal?: AbortSignal;
-}) => {
+}): Promise<{ msg: string; data: NameItem[]; pagination: { page: number; totalPages: number } }> => {
   try {
     const url = `${process.env.NEXT_PUBLIC_BASE_API_URL}/names?search=${encodeURIComponent(search ?? "")}&page=${page ?? 1}&limit=${limit}${type ? `&nameType=${type}` : ""}${gender ? `&gender=${gender}` : ""}${status ? `&status=${status}` : ""}`;
 

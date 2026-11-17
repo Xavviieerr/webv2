@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 /** Extract results array from API response; handles multiple response shapes. */
 export function getResultsFromResponse(response: any): any[] {
   if (!response || typeof response !== "object") return [];

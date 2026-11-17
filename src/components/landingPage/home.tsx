@@ -9,6 +9,40 @@ import { useTranslation } from "react-i18next";
 import { contributeIcon, engageIcon, exploreIcon } from "./icons";
 import { useInitTranslation } from "@/hooks";
 
+const ClassesSection = () => {
+  const router = useRouter();
+  const { t } = useTranslation("common");
+
+  return (
+    <section className="py-10 sm:py-14 lg:py-20 px-4 sm:px-6 lg:px-16">
+      <div className="max-w-[1700px] mx-auto w-full lg:px-10">
+        <div className="flex flex-col gap-5 rounded-2xl bg-[#FBF5EA] p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:p-10">
+          <div className="flex flex-col gap-3">
+            <span className="text-xs font-medium uppercase tracking-widest text-[#9A3B00] sm:text-sm">
+              {t("personalClasses")}
+            </span>
+            <h2 className="max-w-xl text-2xl font-semibold leading-tight text-foreground sm:text-3xl lg:text-4xl">
+              {t("classesCardTitle")}
+            </h2>
+            <p className="max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-base">
+              {t("classesCardDescription")}
+            </p>
+          </div>
+          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+            <Button
+              onClick={() => router.push("/classes")}
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 sm:px-8"
+            >
+              {t("exploreClasses")}
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const HeroSection = () => {
   const router = useRouter();
   const { t } = useTranslation("common");
@@ -408,6 +442,7 @@ export default function Home() {
     <main>
       <HeroSection />
       <HowItWorksSection />
+      <ClassesSection />
       <SupportSection />
       {/* <WorkWithPurposeSection /> */}
       <div className="mx-auto w-full py-10 sm:py-12 lg:py-24">

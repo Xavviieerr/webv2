@@ -241,7 +241,6 @@ const Footer = () => {
                   {social.svg ? (
                     <social.svg />
                   ) : (
-                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={social.img}
                       alt={social.alt}

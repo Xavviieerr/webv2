@@ -16,7 +16,7 @@ export const fetchFigures = async ({
   signal?: AbortSignal;
 }) => {
   try {
-    let url = `${process.env.NEXT_PUBLIC_BASE_API_URL}/figures?search=${encodeURIComponent(search)}&page=${page}&limit=${limit}&sortBy=fullName&sortDir=ASC${status ? `&status=${status}` : ""}${category ? `&occupation=${category}` : ""}`;
+    const url = `${process.env.NEXT_PUBLIC_BASE_API_URL}/figures?search=${encodeURIComponent(search)}&page=${page}&limit=${limit}&sortBy=fullName&sortDir=ASC${status ? `&status=${status}` : ""}${category ? `&occupation=${category}` : ""}`;
 
     const response = await fetch(url, {
       method: "GET",

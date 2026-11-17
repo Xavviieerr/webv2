@@ -33,7 +33,7 @@ export function useKeyboardListNavigation<T>({
 
     if (e.key === "Enter") {
       e.preventDefault();
-      activeIndex == -1 ? onSelect?.(query, activeIndex) : onSelect?.(items[activeIndex], activeIndex);
+      if (activeIndex === -1) { onSelect?.(query, activeIndex); } else { onSelect?.(items[activeIndex], activeIndex); }
       
     }
   };

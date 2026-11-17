@@ -77,7 +77,7 @@ export function FigureSearchBar() {
   }, []);
 
   const selectFigure = useCallback(
-    (figure: { id: string }) => {
+    (figure: { id: string; fullName: string }) => {
       saveToHistory(figure.fullName);
       setSearchTerm("");
       setShowSuggestions(false);

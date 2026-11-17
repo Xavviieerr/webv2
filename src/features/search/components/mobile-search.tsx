@@ -18,7 +18,7 @@ const MobileSearch = ({
   const { t } = useTranslation("common");
 
   useEffect(() => {
-    showSuggestions && inputRef.current?.focus();
+    if (showSuggestions) inputRef.current?.focus();
   }, [showSuggestions]);
 
   if (!showSuggestions) return null;

@@ -1,8 +1,6 @@
 import { apiSlice } from "@/slice/requestSlice";
 import type { SupportTicket, CreateTicketRequest, TicketListQueryParams } from "../types";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 function extractTickets(raw: any): SupportTicket[] {
   if (Array.isArray(raw)) return raw;
   if (raw && typeof raw === "object") {

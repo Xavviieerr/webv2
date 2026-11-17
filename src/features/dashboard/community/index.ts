@@ -3,7 +3,6 @@ export { CommunityFeed } from "./components/CommunityFeed";
 export { CommunityPostCard } from "./components/CommunityPostCard";
 export { CommunityEmptyState } from "./components/CommunityEmptyState";
 export { CommunitySkeleton } from "./components/CommunitySkeleton";
-export { CreatePostModal } from "./components/CreatePostModal";
 export { EditPostModal } from "./components/EditPostModal";
 export { PostDetail } from "./components/PostDetail";
 export { CommentsSection } from "./components/CommentsSection";

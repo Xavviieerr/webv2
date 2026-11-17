@@ -2,8 +2,10 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { Search, Clock, X } from "lucide-react";
+import { useContributorAccess } from "@/features/guonopedia/contributors";
 import { useSearch } from "@/features/search/hooks/use-search";
 import { useSearchSuggestions } from "@/features/search/hooks/use-search-suggestions";
 import { useSearchHistoryCtx } from "@/features/search/lib/search-history-context";
@@ -11,6 +13,7 @@ import type { MiniFigures, NameRecord } from "@/features/shared/types";
 import { IconChevronRight } from "@tabler/icons-react";
 import { IconArrowRight } from "@tabler/icons-react";
 import { FeaturedContent } from "@/features/dashboard/home";
+import { ClassesPromoCard } from "@/features/classes";
 import { FEATURED_SECTION_BG } from "@/features/dashboard/home/constants/featured";
 import { guonopediaCategories } from "./constants/categories";
 import { useWordCountTotalQuery } from "@/slice/wordEndpoints";
@@ -29,17 +32,24 @@ type SearchStateResults = {
   words: SensePacket[];
   figures: MiniFigures[];
   names: NameRecord["items"];
+  places: import("@/features/dashboard/places/types").PlaceListItem[];
 };
 
 const EMPTY_RESULTS: SearchStateResults = {
   words: [],
   figures: [],
   names: [],
+  places: [],
 };
 
 export function GuonopediaLanding() {
   const router = useRouter();
   const { t } = useTranslation("common");
+  const { hasApplication, applyHref, hubHref } = useContributorAccess();
+
+  const contributorCta = hasApplication
+    ? { href: hubHref, label: t("viewApplicationStatus") }
+    : { href: applyHref, label: t("applyToBeContributor") };
 
   const { data: wordCountData } = useWordCountTotalQuery();
   const { data: nameCountData } = useNameCountTotalQuery();
@@ -327,26 +337,30 @@ export function GuonopediaLanding() {
         </div>
       </div>
 
+      {/* Personal Urhobo classes */}
+      <div className="mb-10 max-w-md">
+        <ClassesPromoCard />
+      </div>
+
       {/* Featured Content */}
       <FeaturedContent />
 
-      {/* Contribute to the Encyclopedia */}
+      {/* Apply to contribute */}
       <div className="mt-10 flex flex-col items-center text-center">
         <h2 className="text-2xl font-semibold text-[#0D4D4D] mb-3">
           {t("contributeToEncyclopedia")}
         </h2>
         <p className="text-gray-600 max-w-xl mb-6">
-          {t("contributeDescription")}
+          {t("contributorProgramDescription")}
         </p>
-        <button
-          type="button"
-          onClick={() => router.push("/guonopedia/contribute")}
+        <Link
+          href={contributorCta.href}
           className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white text-sm font-medium transition-opacity hover:opacity-90"
           style={{ backgroundColor: FEATURED_SECTION_BG }}
         >
-          {t("shareYourKnowledge")}
+          {contributorCta.label}
           <IconArrowRight className="w-4 h-4" />
-        </button>
+        </Link>
       </div>
     </div>
   );

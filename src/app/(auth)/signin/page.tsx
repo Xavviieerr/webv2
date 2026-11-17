@@ -15,6 +15,23 @@ import { useLanguageSync, usePasswordVisibility } from "@/features/auth/hooks";
 import { validateLoginIdentifier, validateLoginPassword } from "@/features/auth/schemas";
 import { TEAL, BORDER_GRAY, TEXT_GRAY } from "@/features/auth/constants";
 
+const DEFAULT_REDIRECT = "/search";
+
+/**
+ * Only allow same-origin, absolute paths as the post-login destination so a
+ * crafted `?next=` value cannot redirect the user off-site.
+ */
+function getSafeRedirectPath(): string {
+	if (typeof window === "undefined") return DEFAULT_REDIRECT;
+
+	const next = new URLSearchParams(window.location.search).get("next");
+	if (!next) return DEFAULT_REDIRECT;
+	if (!next.startsWith("/") || next.startsWith("//")) return DEFAULT_REDIRECT;
+	if (next.includes("\\")) return DEFAULT_REDIRECT;
+
+	return next;
+}
+
 export default function SignIn() {
 	const dispatch = useAppDispatch();
 	const router = useRouter();
@@ -58,7 +75,7 @@ export default function SignIn() {
 
 		try {
 			await login({ identifier, password, stayLoggedIn }).unwrap();
-			router.replace("/search");
+			router.replace(getSafeRedirectPath());
 		} catch {
 			// Error toast shown by onQueryStarted in authApi
 		} finally {

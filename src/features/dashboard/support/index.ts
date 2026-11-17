@@ -11,7 +11,7 @@ export { useGetMyTicketsQuery, useGetTicketByIdQuery, useCreateTicketMutation } 
 
 export type { SupportTicket, TicketCategory, TicketStatus, CreateTicketRequest } from "./types";
 
-export { TICKET_CATEGORIES, SUBJECT_MAX_LENGTH, MESSAGE_MAX_LENGTH, CONTACT_EMAIL, CONTACT_PHONE, SUPPORT_COLORS } from "./constants";
+export { TICKET_CATEGORIES, SUBJECT_MAX_LENGTH, MESSAGE_MAX_LENGTH, CONTACT_EMAIL, SUPPORT_COLORS } from "./constants";
 
 export { createTicketSchema } from "./schemas/supportSchema";
 export type { CreateTicketInput } from "./schemas/supportSchema";
