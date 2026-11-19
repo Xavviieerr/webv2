@@ -2,6 +2,8 @@
 
 import { useTranslation } from "react-i18next";
 import { Globe2, HeartHandshake, Users } from "lucide-react";
+import { ClassesSection } from "./ClassesSection";
+import { SectionHeading } from "./SectionHeading";
 
 export function WhyClasses() {
 	const { t } = useTranslation("common");
@@ -25,31 +27,37 @@ export function WhyClasses() {
 	];
 
 	return (
-		<section className="flex flex-col gap-6">
-			<h2 className="text-2xl font-semibold text-[#02474F] sm:text-3xl">
-				{t("whyUrhoboTitle")}
-			</h2>
-			<div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-				{cards.map((card) => {
-					const Icon = card.icon;
-					return (
-						<div
-							key={card.title}
-							className="flex flex-col gap-3 rounded-2xl border-2 border-[#D4E8EA] bg-white p-5"
-						>
-							<span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#D4E8EA] text-[#02474F]">
-								<Icon className="h-5 w-5" />
-							</span>
-							<h3 className="text-base font-semibold text-[#02474F]">
-								{card.title}
-							</h3>
-							<p className="text-sm leading-relaxed text-[#1A4349]/80">
-								{card.description}
-							</p>
-						</div>
-					);
-				})}
+		<ClassesSection tone="white">
+			<div className="flex flex-col gap-10">
+				<SectionHeading
+					align="center"
+					eyebrow={t("personalClasses")}
+					title={t("whyUrhoboTitle")}
+					className="mx-auto max-w-3xl"
+				/>
+
+				<div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:gap-6">
+					{cards.map((card) => {
+						const Icon = card.icon;
+						return (
+							<div
+								key={card.title}
+								className="group flex flex-col gap-4 rounded-3xl border border-[#02474F]/10 bg-[#D4E8EA] p-6 transition-all hover:-translate-y-1 hover:border-[#41A3AD] hover:shadow-[0_24px_50px_-38px_rgba(2,71,79,0.6)] lg:p-8"
+							>
+								<span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/80 text-[#02474F] transition-colors group-hover:bg-[#02474F] group-hover:text-white">
+									<Icon className="h-5 w-5" />
+								</span>
+								<h3 className="text-lg font-semibold text-[#02474F]">
+									{card.title}
+								</h3>
+								<p className="text-sm leading-relaxed text-[#1A4349]/75">
+									{card.description}
+								</p>
+							</div>
+						);
+					})}
+				</div>
 			</div>
-		</section>
+		</ClassesSection>
 	);
 }

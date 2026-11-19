@@ -34,10 +34,10 @@ export function ContributorSteps() {
 					return (
 						<div
 							key={step.title}
-							className="flex flex-col gap-3 rounded-2xl border border-[#0D4D4D]/10 bg-white p-5"
+							className="flex flex-col gap-3 rounded-2xl border border-[#0D4D4D]/10 bg-[#D4E8EA] p-5"
 						>
 							<div className="flex items-center gap-3">
-								<span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#D4E8EA] text-sm font-bold text-[#0D4D4D]">
+								<span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-sm font-bold text-[#0D4D4D]">
 									{index + 1}
 								</span>
 								<Icon className="h-5 w-5 text-[#0D4D4D]/50" />

@@ -3,17 +3,17 @@
 import { useTranslation } from "react-i18next";
 import {
 	CalendarCheck,
-	CheckCircle2,
-	Globe2,
 	MessageCircle,
 	UserCheck,
 	Video,
 } from "lucide-react";
+import { ClassesSection } from "./ClassesSection";
+import { SectionHeading } from "./SectionHeading";
 
 export function HowClassesWork() {
 	const { t } = useTranslation("common");
 
-	const cards = [
+	const steps = [
 		{
 			icon: CalendarCheck,
 			title: t("classStep1Title"),
@@ -34,44 +34,49 @@ export function HowClassesWork() {
 			title: t("classStep4Title"),
 			description: t("classStep4Description"),
 		},
-		{
-			icon: CheckCircle2,
-			title: t("includedTitle"),
-			description: t("includedDescription"),
-		},
-		{
-			icon: Globe2,
-			title: t("diasporaFriendlyTitle"),
-			description: t("diasporaFriendlyDescription"),
-		},
 	];
 
 	return (
-		<section className="flex flex-col gap-6">
-			<h2 className="text-2xl font-semibold text-[#02474F] sm:text-3xl">
-				{t("howClassesWorkTitle")}
-			</h2>
-			<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-				{cards.map((card) => {
-					const Icon = card.icon;
-					return (
-						<div
-							key={card.title}
-							className="flex flex-col gap-3 rounded-2xl border-2 border-[#D4E8EA] bg-white p-5"
-						>
-							<span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#D4E8EA] text-[#02474F]">
-								<Icon className="h-4 w-4" />
-							</span>
-							<h3 className="text-sm font-semibold text-[#02474F] sm:text-base">
-								{card.title}
-							</h3>
-							<p className="text-sm leading-relaxed text-[#1A4349]/80">
-								{card.description}
-							</p>
-						</div>
-					);
-				})}
+		<ClassesSection tone="tint">
+			<div className="flex flex-col gap-10">
+				<SectionHeading
+					align="center"
+					eyebrow={t("personalClasses")}
+					title={t("howClassesWorkTitle")}
+					className="mx-auto max-w-3xl"
+				/>
+
+				<ol className="relative grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+					<span
+						aria-hidden
+						className="absolute left-0 right-0 top-[52px] hidden h-px bg-[#D4E8EA] lg:block"
+					/>
+					{steps.map((step, index) => {
+						const Icon = step.icon;
+						return (
+							<li
+								key={step.title}
+								className="relative flex flex-col gap-3 rounded-3xl border border-[#02474F]/10 bg-[#D4E8EA] p-5 lg:p-6"
+							>
+								<div className="flex items-center justify-between">
+									<span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-[#02474F]">
+										<Icon className="h-5 w-5" />
+									</span>
+									<span className="text-2xl font-bold text-white">
+										{String(index + 1).padStart(2, "0")}
+									</span>
+								</div>
+								<h3 className="text-sm font-semibold text-[#02474F] sm:text-base">
+									{step.title}
+								</h3>
+								<p className="text-sm leading-relaxed text-[#1A4349]/75">
+									{step.description}
+								</p>
+							</li>
+						);
+					})}
+				</ol>
 			</div>
-		</section>
+		</ClassesSection>
 	);
 }

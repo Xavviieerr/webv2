@@ -29,7 +29,7 @@ export function ScopeGrid({ statusMap, isAuthenticated }: ScopeGridProps) {
 					<Link
 						key={definition.value}
 						href={href}
-						className="group flex flex-col gap-3 rounded-2xl border border-[#0D4D4D]/10 bg-white p-5 transition-all hover:-translate-y-0.5 hover:border-[#0D4D4D]/25 hover:shadow-md"
+						className="group flex flex-col gap-3 rounded-2xl border border-[#0D4D4D]/10 bg-[#D4E8EA] p-5 transition-all hover:-translate-y-0.5 hover:border-[#0D4D4D]/25 hover:shadow-md"
 					>
 						<div className="flex items-start justify-between gap-3">
 							<div

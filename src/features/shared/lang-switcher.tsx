@@ -1,14 +1,12 @@
 "use client";
 
-import i18n from "@/lib/i18n";
 import { cn } from "@/lib/utils";
-import { setLanguage } from "@/slice/changeLangSlice";
+import { useAppSelector } from "@/types/hooks";
 import { RootState } from "@/store/store";
-import { useAppDispatch, useAppSelector } from "@/types/hooks";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
+import { useLanguageSwitch, type Language } from "./use-language-switch";
 
 interface LanguageSwitcherProps {
   /** Compact variant for headers: no outer padding and a tighter control. */
@@ -16,66 +14,15 @@ interface LanguageSwitcherProps {
   className?: string;
 }
 
-const LanguageSwitcher = ({ compact = false, className }: LanguageSwitcherProps) => {
-  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
-  //   const [isMobileLanguageDropdownOpen, setIsMobileLanguageDropdownOpen] =
-  //     useState(false);
-
-  const router = useRouter();
-  const pathname = usePathname();
-
-  const language = useAppSelector(
+const LanguageSwitcher = ({
+  compact = false,
+  className,
+}: LanguageSwitcherProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const { language, changeLanguage } = useLanguageSwitch();
+  const reduxLanguage = useAppSelector(
     (state: RootState) => state.language.language,
   );
-  const languageDropdownRef = useRef<HTMLDivElement>(null);
-  const dispatch = useAppDispatch();
-
-  const handleLanguageSelect = (
-    lang: "en" | "urhobo",
-    e?: React.MouseEvent | React.TouchEvent,
-  ) => {
-    // Prevent event propagation to avoid closing dropdown prematurely
-    if (e) {
-      e.stopPropagation();
-      e.preventDefault();
-    }
-
-    // Update Redux state (which also updates localStorage and cookie via the reducer)
-    dispatch(setLanguage(lang));
-    // Update i18n immediately
-    if (typeof i18n.changeLanguage === "function") {
-      i18n.changeLanguage(lang);
-    }
-
-    // Close dropdowns
-    setIsLanguageDropdownOpen(false);
-    // setIsMobileLanguageDropdownOpen(false);
-
-    // Small delay to ensure state updates before navigation
-    setTimeout(() => {
-      // Redirect to language-specific route if on a language-aware page
-      const routeMap: Record<string, { en: string; urhobo: string }> = {
-        "/home": { en: "/home", urhobo: "/uwevwi" },
-        "/uwevwi": { en: "/home", urhobo: "/uwevwi" },
-        "/about": { en: "/about", urhobo: "/kpahe" },
-        "/kpahe": { en: "/about", urhobo: "/kpahe" },
-        "/donate": { en: "/donate", urhobo: "/siobonu" },
-        "/siobonu": { en: "/donate", urhobo: "/siobonu" },
-      };
-
-      const currentRoute = routeMap[pathname];
-      if (currentRoute && currentRoute[lang] !== pathname) {
-        router.push(currentRoute[lang]);
-      }
-    }, 100);
-  };
-
-  // Sync i18n with Redux language state
-  useEffect(() => {
-    if (typeof i18n.changeLanguage === "function") {
-      i18n.changeLanguage(language);
-    }
-  }, [language]);
 
   const switcherRef = useRef<HTMLDivElement | null>(null);
 
@@ -85,57 +32,73 @@ const LanguageSwitcher = ({ compact = false, className }: LanguageSwitcherProps)
         switcherRef.current &&
         !switcherRef.current.contains(event.target as Node)
       ) {
-        setIsLanguageDropdownOpen(false);
+        setIsOpen(false);
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const select = (
+    lang: Language,
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.stopPropagation();
+    changeLanguage(lang);
+    setIsOpen(false);
+  };
+
   return (
     <div
       ref={switcherRef}
       className={cn(!compact && "px-4 py-2", className)}
-      onClick={(e) => e.stopPropagation()}
+      onClick={(event) => event.stopPropagation()}
     >
-      <div className="relative group cursor-pointer" ref={languageDropdownRef}>
+      <div className="relative">
         <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
+          type="button"
+          aria-haspopup="listbox"
+          aria-expanded={isOpen}
+          onClick={(event) => {
+            event.stopPropagation();
+            setIsOpen((open) => !open);
           }}
           className={cn(
-            "w-full flex gap-2 items-center justify-between bg-secondary-foreground/10 border border-green-700/30 group-hover:border-green-700 rounded-full font-medium text-gray-700 transition-all focus:outline-none",
+            "flex w-full items-center justify-between gap-2 rounded-full border border-[#02474F]/15 bg-white font-semibold text-[#02474F] transition-colors hover:border-[#41A3AD] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#41A3AD]/50",
             compact ? "px-2.5 py-1.5 text-[11px]" : "px-3 py-1.5 text-xs",
           )}
         >
           <span>{language === "en" ? "ENG" : "URH"}</span>
           <ChevronDown
-            className={`w-3 h-3 text-gray-500 transition-transform ${isLanguageDropdownOpen ? "rotate-180" : ""}`}
+            className={cn(
+              "h-3 w-3 text-[#02474F]/50 transition-transform",
+              isOpen && "rotate-180",
+            )}
           />
         </button>
 
-        {isLanguageDropdownOpen && (
+        {isOpen && (
           <div
-            className="absolute top-full right-0 mt-1 w-max min-w-full bg-secondary-foreground-50/30 border border-green-700/30 rounded-lg shadow-lg overflow-hidden z-60"
-            onClick={(e) => e.stopPropagation()}
+            role="listbox"
+            className="absolute right-0 top-full z-60 mt-1 w-max min-w-full overflow-hidden rounded-lg border border-[#02474F]/10 bg-white shadow-lg"
+            onClick={(event) => event.stopPropagation()}
           >
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleLanguageSelect("urhobo", e);
-              }}
-              className={`w-full flex items-center gap-2 px-5 py-2 text-xs font-medium transition-all cursor-pointer ${
-                language === "urhobo"
-                  ? "bg-secondary-foreground-50/30 text-gray-900"
-                  : "text-gray-700 hover:bg-gray-50"
-              }`}
+              type="button"
+              role="option"
+              aria-selected={reduxLanguage === "urhobo"}
+              onClick={(event) => select("urhobo", event)}
+              className={cn(
+                "flex w-full cursor-pointer items-center gap-2 px-5 py-2 text-xs font-medium transition-colors",
+                reduxLanguage === "urhobo"
+                  ? "bg-[#D4E8EA] text-[#02474F]"
+                  : "text-[#1A4349] hover:bg-[#F2FEFF]",
+              )}
             >
               <Image
                 src="/images/urhobo.png"
-                alt="Urhobo"
+                alt=""
                 width={14}
                 height={14}
                 className="object-contain"
@@ -144,22 +107,23 @@ const LanguageSwitcher = ({ compact = false, className }: LanguageSwitcherProps)
             </button>
 
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleLanguageSelect("en", e);
-              }}
-              className={`w-full flex items-center gap-2 px-5 py-2 text-xs font-medium transition-all cursor-pointer ${
-                language === "en"
-                  ? "bg-secondary-foreground-50/30 text-gray-900"
-                  : "text-gray-700 hover:bg-gray-50"
-              }`}
+              type="button"
+              role="option"
+              aria-selected={reduxLanguage === "en"}
+              onClick={(event) => select("en", event)}
+              className={cn(
+                "flex w-full cursor-pointer items-center gap-2 px-5 py-2 text-xs font-medium transition-colors",
+                reduxLanguage === "en"
+                  ? "bg-[#D4E8EA] text-[#02474F]"
+                  : "text-[#1A4349] hover:bg-[#F2FEFF]",
+              )}
             >
               <Image
                 src="/uk-flag.png"
-                alt="UK flag"
+                alt=""
                 width={14}
                 height={14}
-                className="object-contain rounded-sm"
+                className="rounded-sm object-contain"
               />
               ENG
             </button>

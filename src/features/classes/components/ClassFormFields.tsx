@@ -13,14 +13,25 @@ interface FieldProps {
 	label: string;
 	error?: string;
 	optionalLabel?: string;
+	requiredLabel?: string;
 	children: ReactNode;
 }
 
-export function Field({ id, label, error, optionalLabel, children }: FieldProps) {
+export function Field({
+	id,
+	label,
+	error,
+	optionalLabel,
+	requiredLabel,
+	children,
+}: FieldProps) {
 	return (
 		<div className="flex flex-col gap-1.5">
 			<label htmlFor={id} className="text-sm font-semibold text-[#02474F]">
 				{label}
+				{requiredLabel && (
+					<span className="font-normal text-[#1A4349]/50"> ({requiredLabel})</span>
+				)}
 				{optionalLabel && (
 					<span className="font-normal text-[#1A4349]/50"> ({optionalLabel})</span>
 				)}
@@ -32,7 +43,7 @@ export function Field({ id, label, error, optionalLabel, children }: FieldProps)
 }
 
 const controlClassName =
-	"w-full rounded-xl border-2 border-[#D4E8EA] bg-white px-3 py-2.5 text-sm text-[#02474F] outline-none transition-colors placeholder:text-[#1A4349]/40 focus:border-[#41A3AD]";
+	"w-full rounded-xl border-2 border-[#02474F]/15 bg-white px-3 py-2.5 text-sm text-[#02474F] outline-none transition-colors placeholder:text-[#1A4349]/40 focus:border-[#41A3AD]";
 
 interface TextFieldProps {
 	id: string;
@@ -43,6 +54,8 @@ interface TextFieldProps {
 	type?: "text" | "tel";
 	error?: string;
 	optionalLabel?: string;
+	requiredLabel?: string;
+	onBlur?: () => void;
 	autoComplete?: string;
 }
 
@@ -55,6 +68,8 @@ export function TextField({
 	type = "text",
 	error,
 	optionalLabel,
+	requiredLabel,
+	onBlur,
 	autoComplete,
 }: TextFieldProps) {
 	return (
@@ -63,12 +78,14 @@ export function TextField({
 			label={label}
 			error={error}
 			optionalLabel={optionalLabel}
+			requiredLabel={requiredLabel}
 		>
 			<input
 				id={id}
 				type={type}
 				value={value}
 				onChange={(event) => onChange(event.target.value)}
+				onBlur={onBlur}
 				placeholder={placeholder}
 				autoComplete={autoComplete}
 				className={cn(controlClassName, error && "border-red-400")}
@@ -86,6 +103,8 @@ interface SelectFieldProps {
 	placeholder: string;
 	error?: string;
 	optionalLabel?: string;
+	requiredLabel?: string;
+	onBlur?: () => void;
 }
 
 export function SelectField({
@@ -97,6 +116,8 @@ export function SelectField({
 	placeholder,
 	error,
 	optionalLabel,
+	requiredLabel,
+	onBlur,
 }: SelectFieldProps) {
 	return (
 		<Field
@@ -104,11 +125,13 @@ export function SelectField({
 			label={label}
 			error={error}
 			optionalLabel={optionalLabel}
+			requiredLabel={requiredLabel}
 		>
 			<select
 				id={id}
 				value={value}
 				onChange={onChange}
+				onBlur={onBlur}
 				className={cn(controlClassName, "appearance-none", error && "border-red-400")}
 			>
 				<option value="">{placeholder}</option>
@@ -128,6 +151,8 @@ interface CheckboxGroupProps {
 	values: string[];
 	onToggle: (value: string) => void;
 	error?: string;
+	requiredLabel?: string;
+	onBlur?: () => void;
 }
 
 export function CheckboxGroup({
@@ -136,10 +161,17 @@ export function CheckboxGroup({
 	values,
 	onToggle,
 	error,
+	requiredLabel,
+	onBlur,
 }: CheckboxGroupProps) {
 	return (
-		<fieldset className="flex flex-col gap-2">
-			<legend className="text-sm font-semibold text-[#02474F]">{label}</legend>
+		<fieldset className="flex flex-col gap-2" onBlur={onBlur}>
+			<legend className="text-sm font-semibold text-[#02474F]">
+				{label}
+				{requiredLabel && (
+					<span className="font-normal text-[#1A4349]/50"> ({requiredLabel})</span>
+				)}
+			</legend>
 			<div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
 				{options.map((option) => {
 					const checked = values.includes(option.value);
@@ -149,8 +181,8 @@ export function CheckboxGroup({
 							className={cn(
 								"flex cursor-pointer items-center gap-2 rounded-xl border-2 px-3 py-2 text-sm transition-colors",
 								checked
-									? "border-[#41A3AD] bg-[#D4E8EA] text-[#02474F]"
-									: "border-[#D4E8EA] bg-white text-[#1A4349]/80 hover:border-[#41A3AD]",
+									? "border-[#02474F] bg-white text-[#02474F]"
+									: "border-[#02474F]/15 bg-white/60 text-[#1A4349]/80 hover:border-[#41A3AD] hover:bg-white",
 							)}
 						>
 							<input

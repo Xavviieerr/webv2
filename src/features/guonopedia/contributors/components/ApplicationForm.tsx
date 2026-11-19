@@ -9,6 +9,7 @@ import {
 	IconArrowRight,
 	IconCheck,
 	IconLoader2,
+	IconUserPlus,
 } from "@tabler/icons-react";
 import { useAppSelector } from "@/types/hooks";
 import { cn } from "@/lib/utils";
@@ -144,13 +145,15 @@ export function ApplicationForm() {
 
 	return (
 		<main className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
-			<Link
-				href="/guonopedia/contribute"
-				className="inline-flex w-fit items-center gap-2 text-sm font-medium text-[#0D4D4D] hover:underline"
-			>
-				<IconArrowLeft className="h-4 w-4" />
-				{t("backToContributorHub")}
-			</Link>
+			{user && (
+				<Link
+					href="/guonopedia/contribute"
+					className="inline-flex w-fit items-center gap-2 text-sm font-medium text-[#0D4D4D] hover:underline"
+				>
+					<IconArrowLeft className="h-4 w-4" />
+					{t("backToContributorHub")}
+				</Link>
+			)}
 
 			<header className="flex flex-col gap-3">
 				<h1 className="text-3xl font-semibold text-[#0D4D4D] sm:text-4xl">
@@ -162,17 +165,82 @@ export function ApplicationForm() {
 			</header>
 
 			{!user && (
-				<section className="flex flex-col items-start gap-3 rounded-2xl border border-[#0D4D4D]/10 bg-white p-6">
-					<h2 className="text-lg font-semibold text-[#0D4D4D]">
-						{t("signInToApply")}
-					</h2>
-					<Link
-						href={`/signin?next=${encodeURIComponent(APPLY_PATH)}`}
-						className="inline-flex items-center gap-2 rounded-full bg-[#0D4D4D] px-5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-					>
-						{t("login")}
-						<IconArrowRight className="h-4 w-4" />
-					</Link>
+				<section className="overflow-hidden rounded-3xl border border-[#0D4D4D]/10 bg-[#D4E8EA]">
+					<div className="flex flex-col gap-5 p-6 sm:p-8">
+						<span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-[#0D4D4D]">
+							<IconUserPlus className="h-6 w-6" />
+						</span>
+
+						<div className="flex flex-col gap-2">
+							<h2 className="text-2xl font-semibold text-[#0D4D4D]">
+								{t("signInToApply")}
+							</h2>
+							<p className="max-w-2xl text-sm leading-relaxed text-gray-600">
+								{t("contributorGateDescription")}
+							</p>
+						</div>
+
+						<div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+							<Link
+								href={`/signin?next=${encodeURIComponent(APPLY_PATH)}`}
+								className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0D4D4D] px-5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+							>
+								{t("login")}
+								<IconArrowRight className="h-4 w-4" />
+							</Link>
+							<Link
+								href="/signup"
+								className="inline-flex items-center justify-center rounded-full border border-[#0D4D4D]/20 px-5 py-2.5 text-sm font-semibold text-[#0D4D4D] transition-colors hover:border-[#0D4D4D]/40 hover:bg-[#F2FEFF]"
+							>
+								{t("createAccount")}
+							</Link>
+						</div>
+
+						<p className="text-xs text-gray-500">
+							{t("contributorGateNote")}
+						</p>
+					</div>
+
+					<div className="border-t border-[#0D4D4D]/10 bg-[#F2FEFF] p-6 sm:p-8">
+						<h3 className="text-base font-semibold text-[#0D4D4D]">
+							{t("chooseScopes")}
+						</h3>
+						<p className="mt-1 text-sm text-gray-600">
+							{t("chooseScopesDescription")}
+						</p>
+
+						<div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+							{SCOPE_DEFINITIONS.filter((definition) => definition.available).map(
+								(definition) => {
+									const Icon = definition.icon;
+									return (
+										<div
+											key={definition.value}
+											className="flex items-start gap-3 rounded-xl border border-[#0D4D4D]/10 bg-white p-3"
+										>
+											<span
+												className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
+												style={{
+													backgroundColor: `${definition.color}1A`,
+													color: definition.color,
+												}}
+											>
+												<Icon className="h-4 w-4" />
+											</span>
+											<div className="min-w-0">
+												<p className="text-sm font-semibold text-[#0D4D4D]">
+													{t(definition.labelKey)}
+												</p>
+												<p className="text-xs leading-relaxed text-gray-600">
+													{t(definition.descriptionKey)}
+												</p>
+											</div>
+										</div>
+									);
+								},
+							)}
+						</div>
+					</div>
 				</section>
 			)}
 
@@ -190,7 +258,7 @@ export function ApplicationForm() {
 			{user && !isLoadingScopes && !result && (
 				<form
 					onSubmit={handleSubmit}
-					className="flex flex-col gap-7 rounded-2xl border border-[#0D4D4D]/10 bg-white p-5 sm:p-7"
+					className="flex flex-col gap-7 rounded-2xl border border-[#0D4D4D]/10 bg-[#D4E8EA] p-5 sm:p-7"
 				>
 					<section className="flex flex-col gap-3">
 						<div className="flex flex-col gap-1">
@@ -221,8 +289,8 @@ export function ApplicationForm() {
 											locked
 												? "cursor-not-allowed border-gray-200 bg-gray-50 opacity-80"
 												: isSelected
-													? "border-[#0D4D4D] bg-[#D4E8EA]"
-													: "border-[#0D4D4D]/15 bg-white hover:border-[#0D4D4D]/40",
+													? "border-[#0D4D4D] bg-white"
+													: "border-[#0D4D4D]/15 bg-white/60 hover:border-[#0D4D4D]/40 hover:bg-white",
 										)}
 									>
 										<span
@@ -370,7 +438,7 @@ function ApplicationResult({ result }: { result: ApplyContributorResponse }) {
 	const hasApplied = applied.length > 0;
 
 	return (
-		<section className="flex flex-col gap-5 rounded-2xl border border-[#0D4D4D]/10 bg-white p-6 sm:p-8">
+		<section className="flex flex-col gap-5 rounded-2xl border border-[#0D4D4D]/10 bg-[#D4E8EA] p-6 sm:p-8">
 			<div className="flex flex-col gap-2">
 				<h2 className="text-xl font-semibold text-[#0D4D4D]">
 					{hasApplied

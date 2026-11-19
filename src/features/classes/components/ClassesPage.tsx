@@ -1,14 +1,18 @@
 "use client";
 
 import { useEffect } from "react";
+import { ClassesPackageProvider } from "./ClassesPackageContext";
 import { ClassesHero } from "./ClassesHero";
+import { TrustStrip } from "./TrustStrip";
 import { WhyClasses } from "./WhyClasses";
 import { LearningPath } from "./LearningPath";
+import { SoloVsClasses } from "./SoloVsClasses";
 import { HowClassesWork } from "./HowClassesWork";
 import { Coaches } from "./Coaches";
+import { Inclusions } from "./Inclusions";
 import { Pricing } from "./Pricing";
+import { Schedule } from "./Schedule";
 import { ClassApplicationForm } from "./ClassApplicationForm";
-import { PersonalClassesSection } from "./PersonalClassesSection";
 import { Stories } from "./Stories";
 import { Faq } from "./Faq";
 
@@ -21,19 +25,22 @@ export function ClassesPage() {
 	}, []);
 
 	return (
-		<main className="w-full">
-			<div className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 py-8 sm:gap-16 sm:px-6 sm:py-10 lg:px-8">
+		<ClassesPackageProvider>
+			<main className="w-full">
 				<ClassesHero />
+				<TrustStrip />
 				<WhyClasses />
 				<LearningPath />
+				<SoloVsClasses />
 				<HowClassesWork />
 				<Coaches />
+				<Inclusions />
 				<Pricing />
+				<Schedule />
 				<ClassApplicationForm />
-				<PersonalClassesSection />
 				<Stories />
 				<Faq />
-			</div>
-		</main>
+			</main>
+		</ClassesPackageProvider>
 	);
 }

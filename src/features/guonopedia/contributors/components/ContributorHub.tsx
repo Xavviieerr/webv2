@@ -1,8 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import { useContributorAccess } from "../hooks/useContributorAccess";
+import {
+	CONTRIBUTOR_APPLY_PATH,
+	useContributorAccess,
+} from "../hooks/useContributorAccess";
 import { buildScopeStatusMap } from "../utils/scopes";
 import { ScopeGrid } from "./ScopeGrid";
 import { ContributorSteps } from "./ContributorSteps";
@@ -10,6 +15,7 @@ import { IconArrowLeft, IconLoader2 } from "@tabler/icons-react";
 
 export function ContributorHub() {
 	const { t } = useTranslation("common");
+	const router = useRouter();
 	const {
 		user,
 		records,
@@ -18,6 +24,12 @@ export function ContributorHub() {
 		isError,
 		refetch,
 	} = useContributorAccess();
+
+	// The hub is only meaningful once an application exists or can be made.
+	// Signed-out visitors are funnelled straight into the application gate.
+	useEffect(() => {
+		if (!user) router.replace(CONTRIBUTOR_APPLY_PATH);
+	}, [router, user]);
 
 	const statusMap = buildScopeStatusMap(records);
 	const approvedCount = records.filter(
@@ -30,6 +42,16 @@ export function ContributorHub() {
 		(sum, record) => sum + (record.submissionCount ?? 0),
 		0,
 	);
+
+	// Avoid flashing the signed-in hub during the redirect.
+	if (!user) {
+		return (
+			<main className="flex items-center justify-center gap-2 py-20 text-sm text-gray-500">
+				<IconLoader2 className="h-5 w-5 animate-spin" />
+				{t("loading")}
+			</main>
+		);
+	}
 
 	return (
 		<main className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
@@ -135,7 +157,7 @@ function SummaryTile({
 	description: string;
 }) {
 	return (
-		<div className="rounded-2xl border border-[#0D4D4D]/10 bg-white px-5 py-4">
+		<div className="rounded-2xl border border-[#0D4D4D]/10 bg-[#D4E8EA] px-5 py-4">
 			<p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
 				{label}
 			</p>

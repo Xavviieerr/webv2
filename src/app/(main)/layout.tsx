@@ -55,11 +55,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   //  style={{ fontFamily: "system-ui" }}
   return (
     <div className={`bg-backg ${plusSans.className}`}>
-      <div className="bg-backg fixed top-0 left-0 right-0 z-50">
+      <div className="sticky top-0 z-50 bg-backg">
         {/* <NewSubHeading /> */}
         <NewHeader />
       </div>
-      <div className="mt-20">{children}</div>
+      <div>{children}</div>
       <Footer />
     </div>
   );

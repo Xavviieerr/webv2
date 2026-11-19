@@ -1,8 +1,16 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  CalendarCheck,
+  Clock3,
+  Globe2,
+  Users,
+} from "lucide-react";
 import { JoinTheUrhoboWorld } from "../newlayout/jointheurhoboWorld";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
@@ -13,29 +21,125 @@ const ClassesSection = () => {
   const router = useRouter();
   const { t } = useTranslation("common");
 
+  const proofs = [
+    { icon: Users, label: t("proofNativeCoaches") },
+    { icon: CalendarCheck, label: t("proofFreePlacement") },
+    { icon: Globe2, label: t("proofTimezones") },
+  ];
+
+  const previewLevels = [
+    { emoji: "👋", titleKey: "level1Title", descriptionKey: "level1Description" },
+    { emoji: "🏠", titleKey: "level2Title", descriptionKey: "level2Description" },
+    { emoji: "🍲", titleKey: "level3Title", descriptionKey: "level3Description" },
+  ];
+
   return (
-    <section className="py-10 sm:py-14 lg:py-20 px-4 sm:px-6 lg:px-16">
-      <div className="max-w-[1700px] mx-auto w-full lg:px-10">
-        <div className="flex flex-col gap-5 rounded-2xl bg-[#FBF5EA] p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:p-10">
-          <div className="flex flex-col gap-3">
-            <span className="text-xs font-medium uppercase tracking-widest text-[#9A3B00] sm:text-sm">
-              {t("personalClasses")}
-            </span>
-            <h2 className="max-w-xl text-2xl font-semibold leading-tight text-foreground sm:text-3xl lg:text-4xl">
+    <section className="bg-white py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-16">
+      <div className="mx-auto w-full max-w-[1700px] lg:px-10">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+          <div className="flex max-w-xl flex-col gap-6">
+            <div className="flex items-center gap-3">
+              <span aria-hidden className="h-px w-8 bg-[#0E808D]" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#0E808D] sm:text-xs">
+                {t("personalClasses")}
+              </span>
+            </div>
+
+            <h2 className="text-3xl font-semibold leading-[1.08] text-[#02474F] sm:text-4xl lg:text-[44px]">
               {t("classesCardTitle")}
             </h2>
-            <p className="max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-base">
+
+            <p className="text-sm leading-relaxed text-[#1A4349]/80 sm:text-base">
               {t("classesCardDescription")}
             </p>
+
+            <ul className="grid grid-cols-1 gap-2.5 sm:grid-cols-3 sm:gap-3">
+              {proofs.map((proof) => {
+                const Icon = proof.icon;
+                return (
+                  <li
+                    key={proof.label}
+                    className="flex items-center gap-2 rounded-xl border border-[#D4E8EA] bg-[#F2FEFF] px-3 py-2.5"
+                  >
+                    <Icon className="h-4 w-4 shrink-0 text-[#0E808D]" />
+                    <span className="text-xs font-semibold text-[#02474F]">
+                      {proof.label}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+              <Button
+                onClick={() => router.push("/classes")}
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 sm:px-8"
+              >
+                {t("exploreClasses")}
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+              <Link
+                href="/classes#pricing"
+                className="group inline-flex items-center gap-1.5 text-sm font-semibold text-[#02474F] underline-offset-4 hover:text-[#0E808D] hover:underline"
+              >
+                {t("seeLevelsPricing")}
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </Link>
+            </div>
           </div>
-          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button
-              onClick={() => router.push("/classes")}
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 sm:px-8"
-            >
-              {t("exploreClasses")}
-              <ArrowRight className="h-4 w-4" />
-            </Button>
+
+          <div className="relative mx-auto w-full max-w-[520px] lg:mx-0 lg:justify-self-end">
+            <div className="rounded-[28px] bg-[#FBF5EA] p-3 sm:p-5">
+              <div className="rounded-2xl border border-[#D4E8EA] bg-white p-5">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-sm font-bold text-[#02474F]">
+                    {t("landingPathTitle")}
+                  </p>
+                  <span className="rounded-full bg-[#D4E8EA] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#02474F]">
+                    {t("levelsRange")}
+                  </span>
+                </div>
+
+                <div className="mt-4 h-2.5 overflow-hidden rounded-full bg-[#D4E8EA]">
+                  <div className="h-full w-[38%] rounded-full bg-[#41A3AD]" />
+                </div>
+
+                <div className="mt-4 flex flex-col gap-2.5">
+                  {previewLevels.map((level) => (
+                    <div
+                      key={level.titleKey}
+                      className="flex items-center gap-3 rounded-2xl border border-[#D4E8EA] bg-[#F2FEFF] px-3 py-2.5"
+                    >
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#FBEDCA] text-base">
+                        {level.emoji}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="truncate text-xs font-bold text-[#02474F]">
+                          {t(level.titleKey)}
+                        </p>
+                        <p className="truncate text-[10px] text-[#1A4349]/70">
+                          {t(level.descriptionKey)}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-4 flex items-center justify-between gap-2 rounded-2xl bg-[#02474F] px-3.5 py-2.5">
+                  <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-white">
+                    <Clock3 className="h-3.5 w-3.5" />
+                    {t("liveSessionChip")}
+                  </span>
+                  <span className="text-[11px] text-white/70">
+                    {t("classesProofDiaspora")}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <span className="absolute -right-2 -top-4 rounded-full bg-[#FBEDCA] px-3.5 py-1.5 text-[11px] font-bold text-[#02474F] shadow-sm sm:-right-4">
+              {t("proofFreePlacement")}
+            </span>
           </div>
         </div>
       </div>
@@ -327,7 +431,7 @@ const HowItWorksSection = () => {
   return (
     <section
       id="how-it-works"
-      className="py-10 max-w-[1400px] mx-auto mt-20 sm:py-14 lg:h-[914px] lg:max-h-[914px] bg-[#FBF5EA] rounded-2xl relative overflow-hidden"
+      className="py-10 max-w-[1400px] mx-auto mt-20 sm:py-14 lg:h-[914px] lg:max-h-[914px] bg-[#FBF5EA] rounded-2xl relative overflow-hidden scroll-mt-32"
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 justify-center items-center gap-8 sm:gap-10 lg:gap-14 px-4 sm:px-6 lg:px-20">
         {/* white rec - desktop layout unchanged */}

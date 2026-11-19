@@ -186,8 +186,8 @@ function ScopeStatePanel({
 
 	return (
 		<div className="flex flex-col gap-4">
-			<section className="flex flex-col items-start gap-3 rounded-2xl border border-[#0D4D4D]/10 bg-white p-6">
-				<span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#D4E8EA] text-[#0D4D4D]">
+			<section className="flex flex-col items-start gap-3 rounded-2xl border border-[#0D4D4D]/10 bg-[#D4E8EA] p-6">
+				<span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#0D4D4D]">
 					<IconTools className="h-5 w-5" />
 				</span>
 				<p className="max-w-xl text-sm leading-relaxed text-gray-600">
@@ -243,8 +243,8 @@ function Panel({
 	actionLabel?: string;
 }) {
 	return (
-		<section className="flex flex-col items-start gap-3 rounded-2xl border border-[#0D4D4D]/10 bg-white p-6">
-			<span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#D4E8EA] text-[#0D4D4D]">
+		<section className="flex flex-col items-start gap-3 rounded-2xl border border-[#0D4D4D]/10 bg-[#D4E8EA] p-6">
+			<span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#0D4D4D]">
 				{icon}
 			</span>
 			<h2 className="text-lg font-semibold text-[#0D4D4D]">{title}</h2>
@@ -266,7 +266,7 @@ function Panel({
 
 function StatTile({ label, value }: { label: string; value: number }) {
 	return (
-		<div className="rounded-2xl border border-[#0D4D4D]/10 bg-white px-5 py-4">
+		<div className="rounded-2xl border border-[#0D4D4D]/10 bg-[#D4E8EA] px-5 py-4">
 			<p className="text-2xl font-semibold text-[#0D4D4D]">{value}</p>
 			<p className="text-xs font-medium uppercase tracking-wide text-gray-500">
 				{label}

@@ -14,8 +14,8 @@ import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { useAppSelector } from "@/types/hooks";
 import { logoutHandler } from "@/features/auth";
-import { LanguageSwitcher } from "@/features/shared";
 import { useInitTranslation } from "@/hooks";
+import { UtilityBar } from "./utilityBar";
 import { useTranslation } from "react-i18next";
 
 export default function NewHeader() {
@@ -56,7 +56,7 @@ export default function NewHeader() {
 
   return (
     <header className="w-full bg-[#F2FEFF]">
-      <div className="h-2 w-full max-w-[1700px] mx-auto" aria-hidden />
+      <UtilityBar />
       {/* Main header area - light background */}
       <div className=" max-w-[1700px] mx-auto">
         <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8 ">
@@ -78,9 +78,6 @@ export default function NewHeader() {
               className="flex-1 justify-center max-w-max"
             >
               <NavigationMenuList className="flex h-auto list-none items-center justify-center gap-0.5 rounded-none border-0 bg-transparent p-0">
-                <NavigationMenuItem className="mr-1">
-                  <LanguageSwitcher compact />
-                </NavigationMenuItem>
                 {navItems.map((item) => {
                   const isActive =
                     pathname === item.href ||
@@ -181,9 +178,6 @@ export default function NewHeader() {
           </button>
         </div>
         <div className="flex flex-col pt-6 px-6 pb-8 gap-6 max-h-full overflow-auto">
-          <div className="pb-3 border-b border-primary-2/10">
-            <LanguageSwitcher compact />
-          </div>
           {navItems.map((item) => {
             const isActive =
               pathname === item.href ||
