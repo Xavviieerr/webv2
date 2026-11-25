@@ -122,7 +122,7 @@ const baseQueryWithReauth: BaseQueryFn<
     return result;
 };
 
-type ValidTags = "User" | "Word" | "Auth" | "Dictionary" | "Notification" | "SupportTicket" | "CommunityPost" | "CommunityComment" | "CommunityReply" | "Place" | "Contributor";
+type ValidTags = "User" | "Word" | "Auth" | "Dictionary" | "Notification" | "SupportTicket" | "CommunityPost" | "CommunityComment" | "CommunityReply" | "Place" | "Contributor" | "Folktale";
 
 type MutationArg<TBody = unknown> = {
     url: string;
@@ -145,7 +145,7 @@ export interface ErrorResponse {
 export const apiSlice = createApi({
     reducerPath: "api",
     baseQuery: baseQueryWithReauth,
-    tagTypes: ["User", "Word", "Auth", "Dictionary", "Notification", "SupportTicket", "CommunityPost", "CommunityComment", "CommunityReply", "Place", "Contributor"],
+    tagTypes: ["User", "Word", "Auth", "Dictionary", "Notification", "SupportTicket", "CommunityPost", "CommunityComment", "CommunityReply", "Place", "Contributor", "Folktale"],
     endpoints: (builder) => ({
         getUser: builder.query<GenericResponse<unknown>, MutationArg>({
             query: (args) => ({

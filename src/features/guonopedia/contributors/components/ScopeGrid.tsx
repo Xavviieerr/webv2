@@ -3,7 +3,10 @@
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { IconArrowRight } from "@tabler/icons-react";
-import { SCOPE_DEFINITIONS } from "../constants/scopes";
+import {
+	SCOPE_DEFINITIONS,
+	isScopeContributionAvailable,
+} from "../constants/scopes";
 import type { ScopeStatusMap } from "../utils/scopes";
 import { StatusBadge } from "./StatusBadge";
 
@@ -17,7 +20,7 @@ export function ScopeGrid({ statusMap, isAuthenticated }: ScopeGridProps) {
 
 	return (
 		<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-			{SCOPE_DEFINITIONS.map((definition) => {
+			{SCOPE_DEFINITIONS.filter(isScopeContributionAvailable).map((definition) => {
 				const record = statusMap[definition.value];
 				const Icon = definition.icon;
 				const hasRecord = Boolean(record);

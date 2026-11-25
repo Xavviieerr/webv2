@@ -62,7 +62,7 @@ export function HowClassesWork() {
 									<span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-[#02474F]">
 										<Icon className="h-5 w-5" />
 									</span>
-									<span className="text-2xl font-bold text-white">
+									<span className="text-2xl font-bold text-[#02474F]">
 										{String(index + 1).padStart(2, "0")}
 									</span>
 								</div>

@@ -6,6 +6,7 @@ import { useGetContributorScopesQuery } from "../api/contributorEndpoints";
 import {
 	getScopeDefinition,
 	isContributorScope,
+	isScopeContributionAvailable,
 } from "../constants/scopes";
 import type { ContributorScopeRecord } from "../types";
 
@@ -20,7 +21,9 @@ function getWorkspaceHref(record: ContributorScopeRecord): string | null {
 	if (!isContributorScope(scope)) return null;
 
 	const definition = getScopeDefinition(scope);
-	return definition.available ? (definition.workspaceHref ?? null) : null;
+	return isScopeContributionAvailable(definition)
+		? (definition.workspaceHref ?? null)
+		: null;
 }
 
 /**

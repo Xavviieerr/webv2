@@ -8,10 +8,12 @@ import {
 	Check,
 	CheckCircle2,
 	Clock,
+	Lock,
 	Mail,
 	MessageCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAppSelector } from "@/types/hooks";
 import { classApplicationSchema } from "../schemas/classApplicationSchema";
 import { generateApplicationReference } from "../utils/reference";
 import {
@@ -81,6 +83,9 @@ const STEP_KEYS: Record<Step, string> = {
 export function ClassApplicationForm() {
 	const { t } = useTranslation("common");
 	const { selectedPackage } = useClassesPackage();
+	const user = useAppSelector((state) => state.auth.user);
+	const isSignedIn = Boolean(user);
+	const signInHref = `/signin?next=${encodeURIComponent("/classes#apply")}`;
 
 	const [step, setStep] = useState<Step>(1);
 	const [form, setForm] = useState<FormState>(INITIAL_STATE);
@@ -212,6 +217,10 @@ export function ClassApplicationForm() {
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+
+		// Applications are tied to an account, so signed-out visitors can fill
+		// the form but cannot send it until they sign in.
+		if (!isSignedIn) return;
 
 		// The button is gated on validity, so this is only a safety net.
 		if (!isFormValid) {
@@ -492,6 +501,15 @@ export function ClassApplicationForm() {
 							</div>
 						)}
 
+						{step === 3 && !isSignedIn && (
+							<div className="flex items-start gap-3 rounded-xl border border-[#02474F]/15 bg-[#FBF5EA] px-4 py-3">
+								<Lock className="mt-0.5 h-4 w-4 shrink-0 text-[#02474F]" />
+								<p className="text-xs leading-relaxed text-[#1A4349]/75">
+									{t("signInToSubmitClassApplication")}
+								</p>
+							</div>
+						)}
+
 						<div className="flex items-center justify-between gap-3 border-t border-[#02474F]/10 pt-5">
 							<button
 								type="button"
@@ -512,6 +530,14 @@ export function ClassApplicationForm() {
 									{t("nextStep")}
 									<ArrowRight className="h-4 w-4" />
 								</button>
+							) : !isSignedIn ? (
+								<Link
+									href={signInHref}
+									className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90"
+								>
+									<Lock className="h-4 w-4" />
+									{t("signInToApplyClass")}
+								</Link>
 							) : (
 								<button
 									type="submit"

@@ -21,7 +21,16 @@ export interface ScopeDefinition {
 	icon: ElementType;
 	color: string;
 	workspaceHref?: string;
+	/**
+	 * Whether the public Guọnọpedia page for this scope is live. This is
+	 * independent from contributor availability.
+	 */
 	available: boolean;
+	/**
+	 * Whether contributors can work on this scope. Falls back to `available`
+	 * when omitted so older definitions keep working.
+	 */
+	contributionAvailable?: boolean;
 }
 
 export const SCOPE_DEFINITIONS: ScopeDefinition[] = [
@@ -33,6 +42,7 @@ export const SCOPE_DEFINITIONS: ScopeDefinition[] = [
 		color: "#59431B",
 		workspaceHref: "/dashboard/dictionary",
 		available: true,
+		contributionAvailable: true,
 	},
 	{
 		value: "name",
@@ -42,6 +52,7 @@ export const SCOPE_DEFINITIONS: ScopeDefinition[] = [
 		color: "#FF9448",
 		workspaceHref: "/dashboard/names",
 		available: true,
+		contributionAvailable: true,
 	},
 	{
 		value: "figure",
@@ -51,6 +62,7 @@ export const SCOPE_DEFINITIONS: ScopeDefinition[] = [
 		color: "#0D4D4D",
 		workspaceHref: "/dashboard/figures",
 		available: true,
+		contributionAvailable: true,
 	},
 	{
 		value: "place",
@@ -60,6 +72,7 @@ export const SCOPE_DEFINITIONS: ScopeDefinition[] = [
 		color: "#9748FF",
 		workspaceHref: "/dashboard/places",
 		available: true,
+		contributionAvailable: true,
 	},
 	{
 		value: "customs",
@@ -75,7 +88,9 @@ export const SCOPE_DEFINITIONS: ScopeDefinition[] = [
 		descriptionKey: "folktalesDescription",
 		icon: IconBook2,
 		color: "#2E7D32",
+		workspaceHref: "/guonopedia/contribute/folktales",
 		available: false,
+		contributionAvailable: true,
 	},
 	{
 		value: "lyrics",
@@ -109,6 +124,7 @@ export const SCOPE_DEFINITIONS: ScopeDefinition[] = [
 		color: "#165E5B",
 		workspaceHref: "/dashboard/community",
 		available: true,
+		contributionAvailable: true,
 	},
 	{
 		value: "other",
@@ -126,6 +142,12 @@ export const SCOPE_DEFINITION_MAP = new Map<ContributorScope, ScopeDefinition>(
 
 export function isContributorScope(value: string): value is ContributorScope {
 	return (CONTRIBUTOR_SCOPES as readonly string[]).includes(value);
+}
+
+export function isScopeContributionAvailable(
+	definition: ScopeDefinition,
+): boolean {
+	return definition.contributionAvailable ?? definition.available;
 }
 
 export function getScopeDefinition(

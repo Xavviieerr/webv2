@@ -17,6 +17,20 @@ export function isContributorStatus(
 	return (KNOWN_STATUSES as string[]).includes(status);
 }
 
+/**
+ * Statuses that already have an application or active role. Scopes in these
+ * states cannot be selected again.
+ */
+export function isLockedContributorStatus(
+	status: string | undefined,
+): boolean {
+	return (
+		status === "pending" ||
+		status === "approved" ||
+		status === "suspended"
+	);
+}
+
 export type ScopeStatusMap = Partial<
 	Record<ContributorScope, ContributorScopeRecord>
 >;

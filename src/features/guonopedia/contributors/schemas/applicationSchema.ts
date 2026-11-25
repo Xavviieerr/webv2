@@ -13,7 +13,7 @@ export const contributorApplicationSchema = z.object({
 	expertise: z.string().trim().max(120, "expertiseTooLong").optional(),
 	agree: z
 		.boolean()
-		.refine((value) => value, "agreeContributorTermsRequired"),
+		.refine((value) => value, "agreeContributorPolicyRequired"),
 });
 
 export type ContributorApplicationInput = z.infer<

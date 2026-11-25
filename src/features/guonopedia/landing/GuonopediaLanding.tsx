@@ -13,7 +13,6 @@ import type { MiniFigures, NameRecord } from "@/features/shared/types";
 import { IconChevronRight } from "@tabler/icons-react";
 import { IconArrowRight } from "@tabler/icons-react";
 import { FeaturedContent } from "@/features/dashboard/home";
-import { ClassesPromoCard } from "@/features/classes";
 import { FEATURED_SECTION_BG } from "@/features/dashboard/home/constants/featured";
 import { guonopediaCategories } from "./constants/categories";
 import { useWordCountTotalQuery } from "@/slice/wordEndpoints";
@@ -175,11 +174,11 @@ export function GuonopediaLanding() {
 
           {/* Suggestion Dropdown */}
           {showSuggestions && (
-            <div className="absolute left-0 right-0 top-full mt-2 rounded-xl shadow-lg border border-gray-300 bg-backg z-50 max-h-80 overflow-y-scroll custom-scrollbar">
+            <div className="absolute left-0 right-0 top-full z-50 mt-2 max-h-80 overflow-y-auto rounded-2xl border border-[#0D4D4D]/15 bg-[#F2FEFF] shadow-xl shadow-[#0D4D4D]/10 custom-scrollbar">
               {showHistory && history.length > 0 && (
-                <div className="p-3">
-                  <div className="flex items-center justify-between px-2 mb-1">
-                    <p className="text-xs text-slate-600/70 underline underline-offset-3">
+                <div className="flex flex-col gap-1 p-2">
+                  <div className="flex items-center justify-between px-2 py-1">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#0D4D4D]/50">
                       {t("recentSearches")}
                     </p>
                     {history.length > 0 && (
@@ -189,7 +188,7 @@ export function GuonopediaLanding() {
                           e.preventDefault();
                           clearHistory();
                         }}
-                        className="text-[11px] text-[#0E808D] hover:text-[#0E808D]/80 font-medium transition-colors underline underline-offset-2"
+                        className="rounded-full px-2 py-0.5 text-[11px] font-semibold text-[#0E808D] transition-colors hover:bg-[#D4E8EA] hover:text-[#0D4D4D]"
                       >
                         {t("clearAll", "Clear all")}
                       </button>
@@ -199,19 +198,19 @@ export function GuonopediaLanding() {
                     {history.map((word) => (
                       <div
                         key={word}
-                        className="flex items-center gap-2 py-2 px-3 rounded-md hover:bg-secondary-foreground/10 group"
+                        className="group flex items-center gap-2 rounded-xl px-2 transition-colors hover:bg-[#D4E8EA]"
                       >
                         <button
                           type="button"
                           onMouseDown={() => handleHistorySelect(word)}
-                          className="flex items-center gap-2 flex-1 text-left cursor-pointer"
+                          className="flex flex-1 cursor-pointer items-center gap-2.5 py-2 text-left"
                         >
                           <Clock
-                            strokeWidth={1.2}
-                            className="text-gray-400 mr-1"
+                            strokeWidth={1.4}
+                            className="shrink-0 text-[#0D4D4D]/40"
                             size={15}
                           />
-                          <span className="font-medium text-gray-600 lowercase">
+                          <span className="text-sm font-medium text-[#0D4D4D]">
                             {word}
                           </span>
                         </button>
@@ -221,9 +220,10 @@ export function GuonopediaLanding() {
                             e.stopPropagation();
                             removeFromHistory(word);
                           }}
-                          className="cursor-pointer hover:text-red-500 transition-colors shrink-0"
+                          className="shrink-0 cursor-pointer rounded-full p-1 text-[#0D4D4D]/35 transition-colors hover:bg-white hover:text-red-500"
+                          aria-label={t("clearAll", "Clear")}
                         >
-                          <X strokeWidth={1.5} size={16} />
+                          <X strokeWidth={1.6} size={15} />
                         </button>
                       </div>
                     ))}
@@ -232,10 +232,10 @@ export function GuonopediaLanding() {
               )}
 
               {!showHistory && suggestionGroups.length > 0 && (
-                <div className="flex flex-col gap-3 p-3">
+                <div className="flex flex-col gap-1 p-2">
                   {suggestionGroups.map((group) => (
                     <div key={group.type} className="flex flex-col">
-                      <p className="text-xs text-slate-600/70 underline underline-offset-3 px-2 mb-1">
+                      <p className="px-2 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[#0D4D4D]/50">
                         {group.label}
                       </p>
                       <div className="flex flex-col">
@@ -244,19 +244,19 @@ export function GuonopediaLanding() {
                             key={item.id}
                             type="button"
                             onMouseDown={() => handleSuggestionSelect(item)}
-                            className="flex items-center gap-2 py-2 px-3 rounded-md hover:bg-secondary-foreground/10 text-left cursor-pointer"
+                            className="flex cursor-pointer items-center gap-2.5 rounded-xl px-2 py-2 text-left transition-colors hover:bg-[#D4E8EA]"
                           >
                             <Search
-                              strokeWidth={1.2}
-                              className="text-gray-400 mr-1 shrink-0"
+                              strokeWidth={1.4}
+                              className="shrink-0 text-[#0D4D4D]/40"
                               size={15}
                             />
-                            <span className="font-medium text-gray-700 lowercase">
+                            <span className="text-sm font-medium text-[#0D4D4D]">
                               {item.label}
                             </span>
                             {item.sublabel && (
-                              <span className="text-xs text-gray-500 truncate">
-                                - {item.sublabel}
+                              <span className="truncate text-xs text-[#0D4D4D]/50">
+                                · {item.sublabel}
                               </span>
                             )}
                           </button>
@@ -268,7 +268,7 @@ export function GuonopediaLanding() {
               )}
 
               {!showHistory && suggestionGroups.length === 0 && (
-                <div className="p-4 text-center text-sm text-gray-500">
+                <div className="px-4 py-5 text-center text-sm text-[#0D4D4D]/50">
                   {t("typeToSearch")}
                 </div>
               )}
@@ -335,11 +335,6 @@ export function GuonopediaLanding() {
             );
           })}
         </div>
-      </div>
-
-      {/* Personal Urhobo classes */}
-      <div className="mb-10 max-w-md">
-        <ClassesPromoCard />
       </div>
 
       {/* Featured Content */}

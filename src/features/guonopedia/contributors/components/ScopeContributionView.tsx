@@ -14,9 +14,11 @@ import { useGetContributorScopesQuery } from "../api/contributorEndpoints";
 import {
 	getScopeDefinition,
 	isContributorScope,
+	isScopeContributionAvailable,
 } from "../constants/scopes";
 import { buildScopeStatusMap } from "../utils/scopes";
 import type { ContributorScope, ContributorScopeRecord } from "../types";
+import { AccessStatePanel } from "./AccessStatePanel";
 import { StatusBadge } from "./StatusBadge";
 
 const EMPTY_RECORDS: ContributorScopeRecord[] = [];
@@ -130,7 +132,7 @@ function ScopeStatePanel({
 
 	if (!isAuthenticated) {
 		return (
-			<Panel
+			<AccessStatePanel
 				icon={<IconLock className="h-5 w-5" />}
 				title={t("signInToApply")}
 				description={t("scopeNotAppliedDescription")}
@@ -142,7 +144,7 @@ function ScopeStatePanel({
 
 	if (!record) {
 		return (
-			<Panel
+			<AccessStatePanel
 				icon={<IconTools className="h-5 w-5" />}
 				title={t("statusNotApplied")}
 				description={t("scopeNotAppliedDescription")}
@@ -154,7 +156,7 @@ function ScopeStatePanel({
 
 	if (status === "pending") {
 		return (
-			<Panel
+			<AccessStatePanel
 				icon={<IconLoader2 className="h-5 w-5" />}
 				title={t("statusPending")}
 				description={t("scopePendingDescription")}
@@ -164,7 +166,7 @@ function ScopeStatePanel({
 
 	if (status === "rejected") {
 		return (
-			<Panel
+			<AccessStatePanel
 				icon={<IconLock className="h-5 w-5" />}
 				title={t("statusRejected")}
 				description={t("scopeRejectedDescription")}
@@ -176,7 +178,7 @@ function ScopeStatePanel({
 
 	if (status === "suspended") {
 		return (
-			<Panel
+			<AccessStatePanel
 				icon={<IconLock className="h-5 w-5" />}
 				title={t("statusSuspended")}
 				description={t("scopeSuspendedDescription")}
@@ -184,25 +186,19 @@ function ScopeStatePanel({
 		);
 	}
 
+	const contributionAvailable = isScopeContributionAvailable(definition);
+
 	return (
 		<div className="flex flex-col gap-4">
-			<section className="flex flex-col items-start gap-3 rounded-2xl border border-[#0D4D4D]/10 bg-[#D4E8EA] p-6">
-				<span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#0D4D4D]">
-					<IconTools className="h-5 w-5" />
-				</span>
-				<p className="max-w-xl text-sm leading-relaxed text-gray-600">
-					{t("scopeApprovedDescription")}
-				</p>
-				{definition.available && definition.workspaceHref && (
-					<Link
-						href={definition.workspaceHref}
-						className="mt-1 inline-flex items-center gap-2 rounded-full bg-[#0D4D4D] px-5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-					>
-						{t("openWorkspace")}
-						<IconArrowRight className="h-4 w-4" />
-					</Link>
-				)}
-			</section>
+			{contributionAvailable && definition.workspaceHref && (
+				<Link
+					href={definition.workspaceHref}
+					className="inline-flex w-fit items-center gap-2 rounded-full bg-[#0D4D4D] px-5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+				>
+					{t("openWorkspace")}
+					<IconArrowRight className="h-4 w-4" />
+				</Link>
+			)}
 
 			<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
 				<StatTile
@@ -215,7 +211,7 @@ function ScopeStatePanel({
 				/>
 			</div>
 
-			{!definition.available && (
+			{!contributionAvailable && (
 				<div className="rounded-2xl border border-amber-200 bg-amber-50 p-5">
 					<h3 className="text-sm font-semibold text-amber-900">
 						{t("scopeComingSoonTitle")}
@@ -226,41 +222,6 @@ function ScopeStatePanel({
 				</div>
 			)}
 		</div>
-	);
-}
-
-function Panel({
-	icon,
-	title,
-	description,
-	actionHref,
-	actionLabel,
-}: {
-	icon: React.ReactNode;
-	title: string;
-	description: string;
-	actionHref?: string;
-	actionLabel?: string;
-}) {
-	return (
-		<section className="flex flex-col items-start gap-3 rounded-2xl border border-[#0D4D4D]/10 bg-[#D4E8EA] p-6">
-			<span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#0D4D4D]">
-				{icon}
-			</span>
-			<h2 className="text-lg font-semibold text-[#0D4D4D]">{title}</h2>
-			<p className="max-w-xl text-sm leading-relaxed text-gray-600">
-				{description}
-			</p>
-			{actionHref && actionLabel && (
-				<Link
-					href={actionHref}
-					className="mt-1 inline-flex items-center gap-2 rounded-full bg-[#0D4D4D] px-5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-				>
-					{actionLabel}
-					<IconArrowRight className="h-4 w-4" />
-				</Link>
-			)}
-		</section>
 	);
 }
 
